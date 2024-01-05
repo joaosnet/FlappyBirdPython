@@ -1,23 +1,23 @@
 # Automações de Processo - Aplicação de Mercado de Trabalho
 
-![GitHub repo size](https://img.shields.io/github/repo-size/joaosnet/FlappyBirdPython?style=for-the-badge)
-![GitHub language count](https://img.shields.io/github/languages/count/joaosnet/FlappyBirdPython?style=for-the-badge)
-![GitHub forks](https://img.shields.io/github/forks/joaosnet/FlappyBirdPython?style=for-the-badge)
-![Bitbucket open issues](https://img.shields.io/bitbucket/issues/joaosnet/FlappyBirdPython?style=for-the-badge)
-![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/joaosnet/FlappyBirdPython?style=for-the-badge)
-[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/joaosnet/FlappyBirdPython/blob/master/README.md)
+![GitHub repo size](https://img.shields.io/github/repo-size/joaosnet/AutomacoesdeProcesso?style=for-the-badge)
+![GitHub language count](https://img.shields.io/github/languages/count/joaosnet/AutomacoesdeProcesso?style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/joaosnet/AutomacoesdeProcesso?style=for-the-badge)
+![Bitbucket open issues](https://img.shields.io/bitbucket/issues/joaosnet/AutomacoesdeProcesso?style=for-the-badge)
+![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/joaosnet/AutomacoesdeProcesso?style=for-the-badge)
+[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/joaosnet/AutomacoesdeProcesso/blob/master/README.md)
 
-<img src="https://github.com/joaosnet/FlappyBirdPython/blob/main/screenshots/1.png"/>
+<img src="https://github.com/joaosnet/AutomacoesdeProcesso/blob/main/screenshots/1.png"/>
 
 ## ☕ Usando no windows
 1. Instale o [anaconda](https://docs.anaconda.com/free/anaconda/install/windows.html)
 2. Crie um ambiente virtual
 ```bash
-conda create -n ap python=3.10
+conda create -n game python=3.10
 ```
 3. Ative o ambiente virtual
 ```bash
-conda activate ap
+conda activate game
 ```
 4. Instale as dependências
 ```bash
