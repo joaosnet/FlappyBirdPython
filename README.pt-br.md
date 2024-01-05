@@ -1,14 +1,14 @@
-# FlappyBirdPython - Jogo contruido em Python
- 
+# Automações de Processo - Aplicação de Mercado de Trabalho
+
 ![GitHub repo size](https://img.shields.io/github/repo-size/joaosnet/FlappyBirdPython?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/joaosnet/FlappyBirdPython?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/joaosnet/FlappyBirdPython?style=for-the-badge)
 ![Bitbucket open issues](https://img.shields.io/bitbucket/issues/joaosnet/FlappyBirdPython?style=for-the-badge)
 ![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/joaosnet/FlappyBirdPython?style=for-the-badge)
-[![pt-br](https://img.shields.io/badge/lang-pt--br-green.svg)](https://github.com/joaosnet/FlappyBirdPython/blob/master/README.pt-br.md)
+[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/joaosnet/FlappyBirdPython/blob/master/README.md)
 
 <img src="https://github.com/joaosnet/FlappyBirdPython/blob/main/screenshots/1.png"/>
- 
+
 ## ☕ Usando no windows
 1. Instale o [anaconda](https://docs.anaconda.com/free/anaconda/install/windows.html)
 2. Crie um ambiente virtual
@@ -28,7 +28,7 @@ pip install -r requirements.txt
 python main.py
 ```
 
-## 🤝 Contributors
+## 🤝 Colaboradores
 
 <table>
   <tr>
