@@ -164,6 +164,31 @@ def desenhar_tela(tela, passaros, canos, chao, pontos):  # Função para desenha
     pygame.display.update()  # Atualiza a tela
 
 
+def desenhar_tela_game_over(tela, pontos):
+    tela.blit(IMAGEM_BACKGROUND, (0, 0))  # Desenha a imagem de fundo na tela
+
+    # Texto "Game Over"
+    texto_game_over = FONTE_PONTOS.render("Game Over", 1, (255, 255, 255))
+    pos_x_game_over = TELA_LARGURA / 2 - texto_game_over.get_width() / 2
+    pos_y_game_over = TELA_ALTURA / 3 - texto_game_over.get_height() / 2
+    tela.blit(texto_game_over, (pos_x_game_over, pos_y_game_over))
+
+    # Pontuação final
+    texto_pontos_final = FONTE_PONTOS.render(f"Pontuação final: {pontos}", 1, (255, 255, 255))
+    pos_x_pontos = TELA_LARGURA / 2 - texto_pontos_final.get_width() / 2
+    pos_y_pontos = TELA_ALTURA / 2 - texto_pontos_final.get_height() / 2
+    tela.blit(texto_pontos_final, (pos_x_pontos, pos_y_pontos))
+
+    # Instruções para reiniciar ou sair
+    fonte_instrucoes = pygame.font.SysFont('arial', 30) # Fonte menor para instruções
+    texto_instrucoes = fonte_instrucoes.render("Pressione 'R' para reiniciar ou 'Q' para sair", 1, (255, 255, 255))
+    pos_x_instrucoes = TELA_LARGURA / 2 - texto_instrucoes.get_width() / 2
+    pos_y_instrucoes = TELA_ALTURA * 2/3 - texto_instrucoes.get_height() / 2
+    tela.blit(texto_instrucoes, (pos_x_instrucoes, pos_y_instrucoes))
+
+    pygame.display.update()  # Atualiza a tela
+
+
 def main():  # Função principal do jogo
     passaros = [Passaro(230, 350)]  # Cria uma lista de pássaros
     chao = Chao(730)  # Cria o chão
@@ -171,6 +196,7 @@ def main():  # Função principal do jogo
     tela = pygame.display.set_mode((TELA_LARGURA, TELA_ALTURA))  # Cria a tela do jogo
     pontos = 0  # Inicializa a pontuação
     relogio = pygame.time.Clock()  # Inicializa o relógio do jogo
+    game_over = False  # Variável para controlar o estado de game over
 
     rodando = True  # Variável para controlar o loop principal do jogo
     while rodando:
@@ -182,39 +208,59 @@ def main():  # Função principal do jogo
                 pygame.quit()  # Encerra o pygame
                 quit()  # Encerra o programa
             if evento.type == pygame.KEYDOWN:  # Verifica se o evento é de pressionar uma tecla
-                if evento.key == pygame.K_SPACE:  # Verifica se a tecla pressionada é a barra de espaço
+                if not game_over and evento.key == pygame.K_SPACE:  # Verifica se a tecla pressionada é a barra de espaço
                     for passaro in passaros:  # Faz cada pássaro pular
                         passaro.pular()
+                elif game_over:
+                    if evento.key == pygame.K_r:
+                        # Reiniciar o jogo
+                        passaros = [Passaro(230, 350)]
+                        chao = Chao(730)
+                        canos = [Cano(700)]
+                        pontos = 0
+                        game_over = False
+                    elif evento.key == pygame.K_q:
+                        # Sair do jogo
+                        rodando = False
+                        pygame.quit()
+                        quit()
 
-        for passaro in passaros:  # Move os pássaros
-            passaro.mover()
-        chao.mover()  # Move o chão
+        if not game_over:
+            # Lógica de movimento e colisão do jogo
+            for passaro in passaros:  # Move os pássaros
+                passaro.mover()
+            chao.mover()  # Move o chão
 
-        adicionar_cano = False  # Variável para controlar a adição de novos canos
-        remover_canos = []  # Lista para armazenar os canos que serão removidos
-        for cano in canos:  # Verifica a colisão dos pássaros com os canos
-            for i, passaro in enumerate(passaros):
-                if cano.colidir(passaro):  # Verifica se houve colisão entre o pássaro e o cano
-                    passaros.pop(i)  # Remove o pássaro da lista
-                if not cano.passou and passaro.x > cano.x:  # Verifica se o pássaro passou pelo cano
-                    cano.passou = True  # Marca o cano como passado
-                    adicionar_cano = True  # Habilita a adição de um novo cano
-            cano.mover()  # Move o cano
-            if cano.x + cano.CANO_TOPO.get_width() < 0:  # Verifica se o cano saiu da tela
-                remover_canos.append(cano)  # Adiciona o cano à lista de remoção
+            adicionar_cano = False  # Variável para controlar a adição de novos canos
+            remover_canos = []  # Lista para armazenar os canos que serão removidos
+            for cano in canos:  # Verifica a colisão dos pássaros com os canos
+                for i, passaro in enumerate(passaros):
+                    if cano.colidir(passaro):  # Verifica se houve colisão entre o pássaro e o cano
+                        passaros.pop(i)  # Remove o pássaro da lista
+                    if not cano.passou and passaro.x > cano.x:  # Verifica se o pássaro passou pelo cano
+                        cano.passou = True  # Marca o cano como passado
+                        adicionar_cano = True  # Habilita a adição de um novo cano
+                cano.mover()  # Move o cano
+                if cano.x + cano.CANO_TOPO.get_width() < 0:  # Verifica se o cano saiu da tela
+                    remover_canos.append(cano)  # Adiciona o cano à lista de remoção
 
-        if adicionar_cano:  # Verifica se deve adicionar um novo cano
-            pontos += 1  # Incrementa a pontuação
-            canos.append(Cano(600))  # Adiciona um novo cano à lista
-        for cano in remover_canos:  # Remove os canos que saíram da tela
-            canos.remove(cano)
+            if adicionar_cano:  # Verifica se deve adicionar um novo cano
+                pontos += 1  # Incrementa a pontuação
+                canos.append(Cano(600))  # Adiciona um novo cano à lista
+            for cano in remover_canos:  # Remove os canos que saíram da tela
+                canos.remove(cano)
 
-        for i, passaro in enumerate(passaros):  # Verifica se os pássaros colidiram com o chão
-            if (passaro.y + passaro.imagem.get_height()) > chao.y or passaro.y < 0:
-                passaros.pop(i)
+            for i, passaro in enumerate(passaros):  # Verifica se os pássaros colidiram com o chão
+                if (passaro.y + passaro.imagem.get_height()) > chao.y or passaro.y < 0:
+                    passaros.pop(i)
 
-        desenhar_tela(tela, passaros, canos, chao, pontos)  # Desenha a tela do jogo
+            if not passaros: # Se a lista de pássaros está vazia
+                game_over = True
 
+            desenhar_tela(tela, passaros, canos, chao, pontos)  # Desenha a tela do jogo
+        else:
+            # Lógica da tela de Game Over
+            desenhar_tela_game_over(tela, pontos) # Função a ser criada
 
 if __name__ == '__main__':
     main()  # Chama a função principal do jogo
